@@ -184,9 +184,9 @@ class QuantEngineClient:
 
     def send_progress_async(self, tick_data: TickData):
         t_seconds = (self.BacktestEndDate - self.BacktestStartDate).total_seconds() * (70 / 100)
-        processed_seconds = (datetime.strptime(tick_data.Timestamp, "%Y-%m-%dT%H:%M:%S") -
+        processed_seconds = (datetime.strptime(tick_data.Timestamp, "%Y-%m-%dT%H:%M:%SZ") -
                              datetime.strptime(self.LastProcessedTick.Timestamp,
-                                               "%Y-%m-%dT%H:%M:%S")).total_seconds() * QuantEngineClient.MultiplyFactor
+                                               "%Y-%m-%dT%H:%M:%SZ")).total_seconds() * QuantEngineClient.MultiplyFactor
 
         progress_percent = (processed_seconds / t_seconds) * 100
 
@@ -241,8 +241,8 @@ class QuantEngineClient:
                 last_processed_tick: TickData = self.LastProcessedTick
 
                 if (self.LastProcessedTick is None) or \
-                        (datetime.strptime(last_processed_tick.Timestamp, "%Y-%m-%dT%H:%M:%S").day !=
-                         datetime.strptime(tick_data.Timestamp, "%Y-%m-%dT%H:%M:%S").day):
+                        (datetime.strptime(last_processed_tick.Timestamp, "%Y-%m-%dT%H:%M:%SZ").day !=
+                         datetime.strptime(tick_data.Timestamp, "%Y-%m-%dT%H:%M:%SZ").day):
                     self.LastProcessedTick = tick_data
 
                 self.on_tick(tick_data)

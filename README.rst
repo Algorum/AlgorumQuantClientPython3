@@ -10,6 +10,13 @@ Install AlgorumQuantClient by running:
 
     install algorum-quant-client-py3
 
+Documentation
+-------------
+
+You can find the detailed documentation on using AlgorumQuantClient package at below URL:
+
+    https://algorum.readme.io
+
 License
 -------
 
