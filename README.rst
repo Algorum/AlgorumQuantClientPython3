@@ -1,20 +1,14 @@
 About
 ========
 
-$project helps you build your Algo Trading strategy for Algorum Cloud.
+AlgorumQuantClient helps you build your Algo Trading strategy for Algorum Cloud.
 
 Installation
 ------------
 
-Install $project by running:
+Install AlgorumQuantClient by running:
 
-    install project
-
-Contribute
-----------
-
-- Issue Tracker: github.com/$project/$project/issues
-- Source Code: github.com/$project/$project
+    install algorum-quant-client-py3
 
 License
 -------
