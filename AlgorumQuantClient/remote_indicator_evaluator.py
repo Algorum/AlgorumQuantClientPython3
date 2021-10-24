@@ -31,10 +31,12 @@ class RemoteIndicatorEvaluator(object):
         result_val = jsonpickle.decode(response.JsonData)
         return result_val[0]["Result"]
 
-    def preload_candles(self, candle_count: int, preload_end_time: datetime):
+    def preload_candles(self, candle_count: int, preload_end_time: datetime, api_key: str,
+                        api_secret_key: str):
         response = self.Client.execute_async(AlgorumWebsocketMessage(
             'preload_candles',
             AlgorumMessageType.Request,
             self.Client.CorIdCounter.increment(),
             jsonpickle.encode(
-                PreloadCandlesRequest(self.Uid, candle_count, preload_end_time), False), None))
+                PreloadCandlesRequest(self.Uid, candle_count, preload_end_time, api_key, api_secret_key),
+                False), None))

@@ -161,10 +161,13 @@ class GetIndicatorsRequest(object):
 
 
 class PreloadCandlesRequest(object):
-    def __init__(self, uid: str, candle_count: int, preload_end_time: datetime):
+    def __init__(self, uid: str, candle_count: int, preload_end_time: datetime, api_key: str,
+                 api_secret_key: str):
         self.IndicatorUid = uid
         self.CandleCount = candle_count
         self.PreloadEndTime = preload_end_time
+        self.ApiKey = api_key
+        self.ApiSecretKey = api_secret_key
 
 
 class OrderProductType:
