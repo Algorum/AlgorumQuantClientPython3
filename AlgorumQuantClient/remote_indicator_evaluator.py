@@ -733,7 +733,7 @@ class RemoteIndicatorEvaluator(object):
                 GetIndicatorsRequest(
                     self.Uid,
                     [
-                        IndicatorRequest('HIGH')
+                        IndicatorRequest('HIGH', None)
                     ]
                 ), False), None))
         result_val = jsonpickle.decode(response.JsonData)
@@ -820,7 +820,7 @@ class RemoteIndicatorEvaluator(object):
                 GetIndicatorsRequest(
                     self.Uid,
                     [
-                        IndicatorRequest('LOW')
+                        IndicatorRequest('LOW', None)
                     ]
                 ), False), None))
         result_val = jsonpickle.decode(response.JsonData)
