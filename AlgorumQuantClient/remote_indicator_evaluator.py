@@ -826,6 +826,533 @@ class RemoteIndicatorEvaluator(object):
         result_val = jsonpickle.decode(response.JsonData)
         return result_val[0]["Result"]
 
+    def macd(self, short_period: float, long_period: float, signal_period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'MACD',
+                            {
+                                'shortPeriod': short_period,
+                                'longPeriod': long_period,
+                                'signalPeriod': signal_period
+                            }
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def macd_signal(self, short_period: float, long_period: float, signal_period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'MACDSIGNAL',
+                            {
+                                'shortPeriod': short_period,
+                                'longPeriod': long_period,
+                                'signalPeriod': signal_period
+                            }
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def marubozu(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'MARUBOZU',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def md(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'MD',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def mfi(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'MFI',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def minus_dmi(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'MINUSDMI',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def mom(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'MOM',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def morning_doji_star(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'MORNINGDOJISTAR',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def morning_star(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'MORNINGSTAR',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def natr(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'NATR',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def obv(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'OBV',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def open(self):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest('OPEN', None)
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def plus_dmi(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'PLUSDMI',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def ppo(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'PPO',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def prev_close(self):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest('PREVCLOSE', None)
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def prev_high(self):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest('PREVHIGH', None)
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def prev_low(self):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest('PREVLOW', None)
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def prev_open(self):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest('PREVOPEN', None)
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def psar(self, period: float, accl_factor_step: float, accl_factor_max: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'PSAR',
+                            {
+                                'period': period,
+                                'acclFactorStep': accl_factor_step,
+                                'acclFactorMax': accl_factor_max
+                            }
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def roc(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'ROC',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def sin(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'SIN',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def sma(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'SMA',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def spinning_top(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'SPINNINGTOP',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def star(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'STAR',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def stddev(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'STDDEV',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def stoch_d(self, period: float, slowing_period: float, period_2: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'STOCHD',
+                            {
+                                'period': period,
+                                'slowingPeriod': slowing_period,
+                                'period2': period_2
+                            }
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def stoch_k(self, period: float, slowing_period: float, period_2: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'STOCHK',
+                            {
+                                'period': period,
+                                'slowingPeriod': slowing_period,
+                                'period2': period_2
+                            }
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def sub(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'SUB',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
+    def sum(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'SUM',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
     def preload_candles(self, candle_count: int, preload_end_time: datetime, api_key: str,
                         api_secret_key: str):
         response = self.Client.execute_async(AlgorumWebsocketMessage(
