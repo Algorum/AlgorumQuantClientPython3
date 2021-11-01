@@ -1065,7 +1065,7 @@ class RemoteIndicatorEvaluator(object):
         result_val = jsonpickle.decode(response.JsonData)
         return result_val[0]["Result"]
 
-    def ppo(self, period: float):
+    def ppo(self, short_period: float, long_period: float):
         response = self.Client.execute_async(AlgorumWebsocketMessage(
             'get_indicators',
             AlgorumMessageType.Request,
@@ -1076,7 +1076,10 @@ class RemoteIndicatorEvaluator(object):
                     [
                         IndicatorRequest(
                             'PPO',
-                            {'period': period}
+                            {
+                                'shortPeriod': short_period,
+                                'longPeriod': long_period
+                            }
                         )
                     ]
                 ), False), None))
