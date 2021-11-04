@@ -15,7 +15,7 @@ Documentation
 
 You can find the detailed documentation on using AlgorumQuantClient package at below URL:
 
-    https://algorum.readme.io
+    https://docs.algorumsoftware.com
 
 License
 -------
