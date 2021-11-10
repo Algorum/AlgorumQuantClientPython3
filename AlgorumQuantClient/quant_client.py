@@ -10,6 +10,13 @@ from .concurrent_collections import *
 from .remote_indicator_evaluator import *
 
 
+def get_date_format(timestamp: str):
+    if timestamp.find("Z") > 0:
+        return "%Y-%m-%dT%H:%M:%SZ"
+    else:
+        return "%Y-%m-%dT%H:%M:%S"
+
+
 class QuantEngineClient:
     MultiplyFactor = ((60 * 24) / 405)
 
@@ -23,6 +30,7 @@ class QuantEngineClient:
         self.ws = None
         self.CorIdCounter = FastReadCounter()
         self.TickQueue = BoundedBlockingQueue(1000000)
+        self.HandlerMessageQueue = BoundedBlockingQueue(1000000)
         self.stop_event = threading.Event()
         self.open_event = threading.Event()
         self.BacktestStartDate: datetime = datetime.utcnow()
@@ -32,6 +40,7 @@ class QuantEngineClient:
         self.ProgressPercent: float = 0.0
         self.Thread1 = None
         self.Thread2 = None
+        self.Thread3 = None
 
         self.add_message_handler("tick", self.tick_handler)
         self.add_message_handler("order_update", self.order_update_handler)
@@ -68,7 +77,7 @@ class QuantEngineClient:
             "set_data",
             AlgorumMessageType.Request,
             self.CorIdCounter.increment(),
-            quant_data,
+            jsonpickle.encode(quant_data, False),
             None
         ))
 
@@ -210,9 +219,9 @@ class QuantEngineClient:
 
     def send_progress_async(self, tick_data: TickData):
         t_seconds = (self.BacktestEndDate - self.BacktestStartDate).total_seconds() * (70 / 100)
-        processed_seconds = (datetime.strptime(tick_data.Timestamp, "%Y-%m-%dT%H:%M:%SZ") -
+        processed_seconds = (datetime.strptime(tick_data.Timestamp, get_date_format(tick_data.Timestamp)) -
                              datetime.strptime(self.LastProcessedTick.Timestamp,
-                                               "%Y-%m-%dT%H:%M:%SZ")).total_seconds() * QuantEngineClient.MultiplyFactor
+                                               get_date_format(self.LastProcessedTick.Timestamp))).total_seconds() * QuantEngineClient.MultiplyFactor
 
         progress_percent = (processed_seconds / t_seconds) * 100
 
@@ -267,8 +276,8 @@ class QuantEngineClient:
                 last_processed_tick: TickData = self.LastProcessedTick
 
                 if (self.LastProcessedTick is None) or \
-                        (datetime.strptime(last_processed_tick.Timestamp, "%Y-%m-%dT%H:%M:%SZ").day !=
-                         datetime.strptime(tick_data.Timestamp, "%Y-%m-%dT%H:%M:%SZ").day):
+                        (datetime.strptime(last_processed_tick.Timestamp, get_date_format(last_processed_tick.Timestamp)).day !=
+                         datetime.strptime(tick_data.Timestamp, get_date_format(tick_data.Timestamp)).day):
                     self.LastProcessedTick = tick_data
 
                 self.on_tick(tick_data)
@@ -278,6 +287,19 @@ class QuantEngineClient:
                 self.ws.send(jsonpickle.encode(algorum_websocket_message))
             else:
                 break
+
+    def handle_message(self):
+
+        while 1:
+            algorum_websocket_message = self.HandlerMessageQueue.dequeue()
+
+            if algorum_websocket_message.Name in self.MessageHandlerMap:
+                handler = self.MessageHandlerMap[algorum_websocket_message.Name]
+            else:
+                handler = None
+
+            if handler is not None:
+                handler(algorum_websocket_message)
 
     def initialize(self):
         def on_message(ws, message):
@@ -306,7 +328,7 @@ class QuantEngineClient:
                             del self.CorIdMessageMap[msg.CorId]
                             async_waiter.WaiterEvent.set()
             else:
-                handler(msg)
+                self.HandlerMessageQueue.enqueue(msg)
 
         def on_error(ws, error):
             print(error)
@@ -330,5 +352,7 @@ class QuantEngineClient:
         self.Thread1.start()
         self.Thread2 = threading.Thread(target=self.process_tick, daemon=True)
         self.Thread2.start()
+        self.Thread3 = threading.Thread(target=self.handle_message, daemon=True)
+        self.Thread3.start()
 
         self.open_event.wait()

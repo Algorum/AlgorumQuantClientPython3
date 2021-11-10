@@ -22,36 +22,62 @@ class FastReadCounter(object):
 
 class SymbolType:
     Stock = 'Stock'
-    Futures = 'Futures'
-    Options = 'Options'
+    FuturesStock = 'FuturesStock'
+    OptionsStock = 'OptionsStock'
+    FuturesIndex = 'FuturesIndex'
+    OptionsIndex = 'OptionsIndex'
+
+
+class OptionType:
+    Unspecified = 'None'
+    PE = 'PE'
+    CE = 'CE'
+    XX = 'XX'
 
 
 class LogLevel:
-    Debug = 'Debug',
-    Error = 'Error',
+    Debug = 'Debug'
+    Error = 'Error'
     Information = 'Information'
     Warning = 'Warning'
 
 
+class FNOPeriodType:
+    Monthly = 'Monthly'
+    Weekly = 'Weekly'
+
+
 class TradeSymbol(object):
-    def __init__(self, symboltype=None, ticker=None, expirydate=None, script_token=0, **kwargs):
+    def __init__(self,
+                 symboltype=None,
+                 ticker=None,
+                 fno_period_type=None,
+                 fno_month=0,
+                 fno_week=0,
+                 option_type=None,
+                 option_value=0,
+                 script_token=0,
+                 **kwargs):
         if symboltype is None:
             fill_obj(self, **kwargs)
         else:
             self.SymbolType = symboltype
             self.Ticker = ticker
-            self.ExpiryDate = expirydate
+            self.FNOPeriodType = fno_period_type
+            self.FNOMonth = fno_month
+            self.FNOWeek = fno_week
+            self.OptionType = option_type
+            self.OptionValue = option_value
             self.ScripToken = 0
 
 
 class TickData(object):
-    def __init__(self, ticker=None, ticker_type=None, date=None, timestamp=None, ltp=None, ltq=None,
+    def __init__(self, symbol=None, date=None, timestamp=None, ltp=None, ltq=None,
                  bid=None, ask=None, last_tick=None, **kwargs):
-        if ticker is None:
+        if symbol is None:
             fill_obj(self, **kwargs)
         else:
-            self.Ticker = ticker
-            self.TickerType = ticker_type
+            self.Symbol = symbol
             self.Date = date
             self.Timestamp = timestamp
             self.LTP = ltp
