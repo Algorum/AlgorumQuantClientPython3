@@ -75,6 +75,15 @@ class AlgorumWebsocketError(object):
         self.ErrorStackTrace: str
 
 
+class QuantData(object):
+    def __init__(self, key=None, value=None, **kwargs):
+        if key is None:
+            fill_obj(self, **kwargs)
+        else:
+            self.Key = key
+            self.Value = value
+
+
 class AlgorumWebsocketMessage(object):
     def __init__(self, name=None, message_type=None, cor_id=None, json_data=None, error=None, **kwargs):
         if name is None:
@@ -257,6 +266,7 @@ class Order(object):
         self.Validity = None
         self.Variety = None
         self.BrokerageOrderJson = None
+        self.LastTick: TickData = TickData()
 
         fill_obj(self, **kwargs)
 

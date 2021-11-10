@@ -62,6 +62,32 @@ class QuantEngineClient:
             None
         ))
 
+    def set_data(self, key: str, value):
+        quant_data = QuantData(key, jsonpickle.encode(value, False))
+        response = self.execute_async(AlgorumWebsocketMessage(
+            "set_data",
+            AlgorumMessageType.Request,
+            self.CorIdCounter.increment(),
+            quant_data,
+            None
+        ))
+
+        if response.MessageType == AlgorumMessageType.ErrorResponse:
+            raise Exception(response.Error['ErrorMessage'])
+
+    def get_data(self, key: str):
+        request = AlgorumWebsocketMessage('get_data',
+                                          AlgorumMessageType.Request,
+                                          self.CorIdCounter.increment(),
+                                          jsonpickle.encode(key, False), None)
+        response = self.execute_async(request)
+
+        if response.MessageType == AlgorumMessageType.ErrorResponse:
+            raise Exception(response.Error['ErrorMessage'])
+
+        value = jsonpickle.decode(response.JsonData)
+        return value
+
     def add_message_handler(self, name, handler):
         self.MessageHandlerMap[name] = handler
 
