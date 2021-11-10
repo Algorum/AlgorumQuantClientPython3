@@ -10,13 +10,6 @@ from .concurrent_collections import *
 from .remote_indicator_evaluator import *
 
 
-def get_date_format(timestamp: str):
-    if timestamp.find("Z") > 0:
-        return "%Y-%m-%dT%H:%M:%SZ"
-    else:
-        return "%Y-%m-%dT%H:%M:%S"
-
-
 class QuantEngineClient:
     MultiplyFactor = ((60 * 24) / 405)
 
@@ -49,6 +42,13 @@ class QuantEngineClient:
         self.Evaluator: RemoteIndicatorEvaluator
 
         self.initialize()
+
+    @staticmethod
+    def get_date_format(timestamp: str):
+        if timestamp.find("Z") > 0:
+            return "%Y-%m-%dT%H:%M:%SZ"
+        else:
+            return "%Y-%m-%dT%H:%M:%S"
 
     def execute_async(self,
                       algorum_websocket_message: AlgorumWebsocketMessage) -> \
@@ -219,9 +219,10 @@ class QuantEngineClient:
 
     def send_progress_async(self, tick_data: TickData):
         t_seconds = (self.BacktestEndDate - self.BacktestStartDate).total_seconds() * (70 / 100)
-        processed_seconds = (datetime.strptime(tick_data.Timestamp, get_date_format(tick_data.Timestamp)) -
+        processed_seconds = (datetime.strptime(tick_data.Timestamp,
+                                               QuantEngineClient.get_date_format(tick_data.Timestamp)) -
                              datetime.strptime(self.LastProcessedTick.Timestamp,
-                                               get_date_format(self.LastProcessedTick.Timestamp))).total_seconds() * QuantEngineClient.MultiplyFactor
+                                               QuantEngineClient.get_date_format(self.LastProcessedTick.Timestamp))).total_seconds() * QuantEngineClient.MultiplyFactor
 
         progress_percent = (processed_seconds / t_seconds) * 100
 
@@ -276,8 +277,9 @@ class QuantEngineClient:
                 last_processed_tick: TickData = self.LastProcessedTick
 
                 if (self.LastProcessedTick is None) or \
-                        (datetime.strptime(last_processed_tick.Timestamp, get_date_format(last_processed_tick.Timestamp)).day !=
-                         datetime.strptime(tick_data.Timestamp, get_date_format(tick_data.Timestamp)).day):
+                        (datetime.strptime(last_processed_tick.Timestamp,
+                                           QuantEngineClient.get_date_format(last_processed_tick.Timestamp)).day !=
+                         datetime.strptime(tick_data.Timestamp, QuantEngineClient.get_date_format(tick_data.Timestamp)).day):
                     self.LastProcessedTick = tick_data
 
                 self.on_tick(tick_data)
