@@ -192,6 +192,20 @@ class QuantEngineClient:
         # print(order_id)
         return order_id
 
+    def cancel_order(self, order_id: str) -> bool:
+        request = AlgorumWebsocketMessage('cancel_order',
+                                          AlgorumMessageType.Request,
+                                          self.CorIdCounter.increment(),
+                                          jsonpickle.encode(order_id, False), None)
+        # print(request)
+        response = self.execute_async(request)
+
+        if response.MessageType == AlgorumMessageType.ErrorResponse:
+            raise Exception(response.Error['ErrorMessage'])
+
+        result: bool = jsonpickle.decode(response.JsonData)
+        return result
+
     def create_indicator_evaluator(self, create_indicator_request: CreateIndicatorRequest) \
             -> RemoteIndicatorEvaluator:
         request = AlgorumWebsocketMessage('create_indicator_evaluator',
@@ -232,7 +246,7 @@ class QuantEngineClient:
             if tick_data.LastTick:
                 self.ProgressPercent = 100
 
-        if progress_percent >= 1 or tick_data.LastTick:
+        if progress_percent >= 0.1 or progress_percent == 0 or tick_data.LastTick:
             if not tick_data.LastTick:
                 self.ProgressPercent += progress_percent
 
