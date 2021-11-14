@@ -1485,7 +1485,7 @@ class RemoteIndicatorEvaluator(object):
                     ]
                 ), False), None))
         result_val = jsonpickle.decode(response.JsonData)
-        return result_val[0]["Result"]
+        return result_val[0]["Result"], result_val[0]["ResultMap"]["strength"]
 
     def trima(self, period: float):
         response = self.Client.execute_async(AlgorumWebsocketMessage(
