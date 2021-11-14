@@ -1376,8 +1376,10 @@ class RemoteIndicatorEvaluator(object):
                     ]
                 ), False), None))
         result_val = jsonpickle.decode(response.JsonData)
-        return result_val[0]["support"], result_val[0]["supportscore"], result_val[0]["resistance"], result_val[0][
-            "resistancescore"]
+        return result_val[0]["ResultMap"]["support"], \
+               result_val[0]["ResultMap"]["supportscore"], \
+               result_val[0]["ResultMap"]["resistance"], \
+               result_val[0]["ResultMap"]["resistancescore"]
 
     def tan(self, period: float):
         response = self.Client.execute_async(AlgorumWebsocketMessage(
