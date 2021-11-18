@@ -35,6 +35,11 @@ class OptionType:
     XX = 'XX'
 
 
+class SlippageType:
+    BPS = 'BPS'
+    TIME = 'TIME'
+
+
 class LogLevel:
     Debug = 'Debug'
     Error = 'Error'
@@ -253,6 +258,8 @@ class PlaceOrderRequest(object):
         self.Quantity: float = 0.0
         self.Price: float = 0.0
         self.TriggerPrice: float = 0.0
+        self.SlippageType = SlippageType.BPS
+        self.Slippage = 0.0
 
 
 def fill_obj(obj, **kwargs):
@@ -293,6 +300,8 @@ class Order(object):
         self.Variety = None
         self.BrokerageOrderJson = None
         self.LastTick: TickData = TickData()
+        self.SlippageType = None
+        self.Slippage = 0.0
 
         fill_obj(self, **kwargs)
 

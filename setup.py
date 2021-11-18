@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='algorum-quant-client-py3',
-    version='1.0.16',
+    version='1.0.17',
     packages=['AlgorumQuantClient'],
     url='https://github.com/algorum/AlgorumQuantClientPython3',
     license='MIT',
