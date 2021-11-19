@@ -138,7 +138,8 @@ class BacktestRequest(object):
                  password: str,
                  two_factor_auth: str,
                  sampling_time_in_seconds: int,
-                 brokerage_platform: str):
+                 brokerage_platform: str,
+                 capital: float):
         self.StartDate = start_date
         self.EndDate = end_date
         self.Uid = uid
@@ -149,6 +150,7 @@ class BacktestRequest(object):
         self.TwoFactorAuth = two_factor_auth
         self.SamplingTimeInSeconds = sampling_time_in_seconds
         self.BrokeragePlatform = brokerage_platform
+        self.Capital = capital
 
 
 class TradingRequest(object):
@@ -159,7 +161,8 @@ class TradingRequest(object):
                  password: str,
                  two_factor_auth: str,
                  sampling_time_in_seconds: int,
-                 brokerage_platform: str):
+                 brokerage_platform: str,
+                 capital: float):
         self.ApiKey = apikey
         self.ApiSecretKey = api_secret_key
         self.ClientCode = client_code
@@ -167,6 +170,7 @@ class TradingRequest(object):
         self.TwoFactorAuth = two_factor_auth
         self.SamplingTimeInSeconds = sampling_time_in_seconds
         self.BrokeragePlatform = brokerage_platform
+        self.Capital = capital
 
 
 class StrategyLaunchMode:
@@ -302,6 +306,7 @@ class Order(object):
         self.LastTick: TickData = TickData()
         self.SlippageType = None
         self.Slippage = 0.0
+        self.RunId = None
 
         fill_obj(self, **kwargs)
 
