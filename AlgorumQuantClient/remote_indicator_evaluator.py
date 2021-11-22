@@ -13,6 +13,24 @@ class RemoteIndicatorEvaluator(object):
         self.Symbol = symbol
         self.Client = client
 
+    def rsi(self, period: float):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'get_indicators',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(
+                GetIndicatorsRequest(
+                    self.Uid,
+                    [
+                        IndicatorRequest(
+                            'RSI',
+                            {'period': period}
+                        )
+                    ]
+                ), False), None))
+        result_val = jsonpickle.decode(response.JsonData)
+        return result_val[0]["Result"]
+
     def ema(self, period: float):
         response = self.Client.execute_async(AlgorumWebsocketMessage(
             'get_indicators',
