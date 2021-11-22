@@ -13,6 +13,14 @@ class RemoteIndicatorEvaluator(object):
         self.Symbol = symbol
         self.Client = client
 
+    def clear_candles(self):
+        response = self.Client.execute_async(AlgorumWebsocketMessage(
+            'clear_indicator_candles',
+            AlgorumMessageType.Request,
+            self.Client.CorIdCounter.increment(),
+            jsonpickle.encode(self.Uid, False), None))
+        return
+
     def rsi(self, period: float):
         response = self.Client.execute_async(AlgorumWebsocketMessage(
             'get_indicators',
