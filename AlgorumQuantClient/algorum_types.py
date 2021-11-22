@@ -329,3 +329,23 @@ class CrossAbove(object):
             self.CrossOverReached = False
 
         return self.CrossOverReached
+
+
+class CrossBelow(object):
+    def __init__(self):
+        self.StopCrossOverUpdate = True
+        self.CrossOverReached = False
+
+    def evaluate(self, left_val: float, right_val: float) -> bool:
+        if not self.StopCrossOverUpdate:
+            self.CrossOverReached = left_val < right_val
+
+            if self.CrossOverReached:
+                self.StopCrossOverUpdate = True
+        else:
+            if left_val > right_val:
+                self.StopCrossOverUpdate = False
+
+            self.CrossOverReached = False
+
+        return self.CrossOverReached
