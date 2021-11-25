@@ -121,10 +121,15 @@ class AlgorumWebsocketMessage(object):
             fill_obj(self, **kwargs)
         else:
             self.Name = name
-            self.MessageType = message_type
+            self.MessageType: AlgorumMessageType = message_type
             self.CorId = cor_id
             self.JsonData = json_data
-            self.Error = error
+            self.Error: AlgorumWebsocketError = error
+
+
+class AlgorumException(BaseException):
+    def __init__(self, msg: AlgorumWebsocketMessage):
+        self.Message = msg
 
 
 class BacktestRequest(object):

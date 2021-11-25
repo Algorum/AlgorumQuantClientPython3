@@ -38,6 +38,7 @@ class QuantEngineClient:
         self.add_message_handler("tick", self.tick_handler)
         self.add_message_handler("order_update", self.order_update_handler)
         self.add_message_handler("stop", self.stop_handler)
+        self.add_message_handler("error", self.error_handler)
 
         self.Evaluator: RemoteIndicatorEvaluator
 
@@ -57,6 +58,10 @@ class QuantEngineClient:
         self.CorIdMessageMap[algorum_websocket_message.CorId] = async_waiter
         self.ws.send(jsonpickle.encode(algorum_websocket_message, False))
         async_waiter.WaiterEvent.wait()
+
+        if async_waiter.Message.MessageType == AlgorumMessageType.ErrorResponse:
+            raise AlgorumException(async_waiter.Message)
+
         return async_waiter.Message
 
     def send_async(self, algorum_websocket_message: AlgorumWebsocketMessage):
@@ -99,6 +104,10 @@ class QuantEngineClient:
 
     def add_message_handler(self, name, handler):
         self.MessageHandlerMap[name] = handler
+
+    def error_handler(self, algorum_websocket_message):
+        msg = jsonpickle.decode(algorum_websocket_message.JsonData)
+        self.on_error(msg)
 
     def tick_handler(self, algorum_websocket_message):
         tick_data = jsonpickle.decode(algorum_websocket_message.JsonData)
@@ -273,6 +282,9 @@ class QuantEngineClient:
 
     def run(self):
         self.ws.run_forever()
+
+    def on_error(self, msg: str):
+        print(msg)
 
     def on_tick(self, tick_data: TickData):
         raise NotImplementedError(self)
