@@ -77,6 +77,16 @@ class TradeSymbol(object):
             self.ScripToken = 0
 
 
+def is_symbol_equal(source: TradeSymbol, target: TradeSymbol) -> bool:
+    return source.Ticker == target.Ticker and \
+           source.SymbolType == target.SymbolType and \
+           source.OptionType == target.OptionType and \
+           source.OptionValue == target.OptionValue and \
+           source.FNOPeriodType == target.FNOPeriodType and \
+           source.FNOMonth == target.FNOMonth and \
+           source.FNOWeek == target.FNOWeek
+
+
 class TickData(object):
     def __init__(self, symbol=None, date=None, timestamp=None, ltp=None, ltq=None,
                  bid=None, ask=None, last_tick=None, **kwargs):
