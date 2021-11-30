@@ -26,6 +26,7 @@ class SymbolType:
     OptionsStock = 'OptionsStock'
     FuturesIndex = 'FuturesIndex'
     OptionsIndex = 'OptionsIndex'
+    Index = 'Index'
 
 
 class OptionType:
@@ -269,6 +270,7 @@ class PlaceOrderRequest(object):
         self.TriggerPrice: float = 0.0
         self.SlippageType = SlippageType.BPS
         self.Slippage = 0.0
+        self.ValidTillTime: datetime = datetime.utcnow()
 
 
 def fill_obj(obj, **kwargs):
@@ -312,6 +314,7 @@ class Order(object):
         self.SlippageType = None
         self.Slippage = 0.0
         self.RunId = None
+        self.ValidTillTime: datetime = datetime.utcnow()
 
         fill_obj(self, **kwargs)
 
