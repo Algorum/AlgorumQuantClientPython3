@@ -13,9 +13,10 @@ from .remote_indicator_evaluator import *
 class QuantEngineClient:
     MultiplyFactor = ((60 * 24) / 405)
 
-    def __init__(self, url, apikey, launchmode, sid):
+    def __init__(self, url, apikey, launchmode, sid, user_id, trace_ws=False):
         self.Url = url
         self.ApiKey = apikey
+        self.UserId = user_id
         self.LaunchMode = launchmode
         self.StrategyId = sid
         self.MessageHandlerMap = {}
@@ -34,6 +35,7 @@ class QuantEngineClient:
         self.Thread1 = None
         self.Thread2 = None
         self.Thread3 = None
+        self.TraceWs = trace_ws
 
         self.add_message_handler("tick", self.tick_handler)
         self.add_message_handler("order_update", self.order_update_handler)
@@ -361,19 +363,26 @@ class QuantEngineClient:
         def on_error(ws, error):
             print(error)
 
-        def on_close(ws):
+        def on_close(ws, error, msg):
             print('websockets closed')
+            print(error)
+            print(msg)
             self.stop_event.set()
 
         def on_open(ws):
             print('open')
             self.open_event.set()
 
-        websocket.enableTrace(False)
+        if self.TraceWs is None:
+            self.TraceWs = False
+
+        websocket.enableTrace(self.TraceWs)
+
         self.ws = websocket.WebSocketApp(self.Url,
                                          on_message=on_message,
                                          on_error=on_error,
-                                         on_close=on_close)
+                                         on_close=on_close,
+                                         header={"x-algorum-userid": self.UserId})
         self.ws.on_open = on_open
 
         self.Thread1 = threading.Thread(target=self.run, daemon=True)
