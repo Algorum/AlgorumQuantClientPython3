@@ -89,7 +89,7 @@ def is_symbol_equal(source: TradeSymbol, target: TradeSymbol) -> bool:
 
 class TickData(object):
     def __init__(self, symbol=None, date=None, timestamp=None, ltp=None, ltq=None,
-                 bid=None, ask=None, last_tick=None, **kwargs):
+                 bid=None, ask=None, last_tick=None, open_interest=None, **kwargs):
         if symbol is None:
             fill_obj(self, **kwargs)
         else:
@@ -101,6 +101,7 @@ class TickData(object):
             self.Bid = bid
             self.Ask = ask
             self.LastTick = last_tick
+            self.OpenInterest = open_interest
 
 
 class AlgorumMessageType:
