@@ -63,6 +63,7 @@ class TradeSymbol(object):
                  option_type=None,
                  option_value=0,
                  script_token=0,
+                 expiry_date=None,
                  **kwargs):
         if symboltype is None:
             fill_obj(self, **kwargs)
@@ -75,6 +76,7 @@ class TradeSymbol(object):
             self.OptionType = option_type
             self.OptionValue = option_value
             self.ScripToken = 0
+            self.ExpiryDate = expiry_date
 
 
 def is_symbol_equal(source: TradeSymbol, target: TradeSymbol) -> bool:
@@ -84,7 +86,8 @@ def is_symbol_equal(source: TradeSymbol, target: TradeSymbol) -> bool:
            source.OptionValue == target.OptionValue and \
            source.FNOPeriodType == target.FNOPeriodType and \
            source.FNOMonth == target.FNOMonth and \
-           source.FNOWeek == target.FNOWeek
+           source.FNOWeek == target.FNOWeek and \
+           source.ExpiryDate == target.ExpiryDate
 
 
 class TickData(object):
