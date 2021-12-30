@@ -188,7 +188,7 @@ class QuantEngineClient:
             raise Exception(response.Error['ErrorMessage'])
 
     def get_holidays(self, exchange: TradeExchange):
-        request = AlgorumWebsocketMessage('place_order',
+        request = AlgorumWebsocketMessage('get_holidays',
                                           AlgorumMessageType.Request,
                                           self.CorIdCounter.increment(),
                                           jsonpickle.encode(exchange, False), None)
