@@ -57,13 +57,13 @@ class TradeSymbol(object):
     def __init__(self,
                  symboltype=None,
                  ticker=None,
-                 fno_period_type=None,
+                 fno_period_type=FNOPeriodType.Monthly,
                  fno_month=0,
                  fno_week=0,
-                 option_type=None,
+                 option_type=OptionType.Unspecified,
                  option_value=0,
                  script_token=0,
-                 expiry_date=None,
+                 expiry_date=datetime(1, 1, 1),
                  **kwargs):
         if symboltype is None:
             fill_obj(self, **kwargs)
@@ -267,6 +267,43 @@ class OrderStatus:
     Completed = 'Completed'
     Cancelled = 'Cancelled'
     Rejected = 'Rejected'
+
+
+class OptionsData(object):
+    def __init__(self, **kwargs):
+        self.Symbol: TradeSymbol
+        self.LastTradeTime: datetime
+        self.ServerTime: datetime
+        self.LTP: float
+        self.Bid: float
+        self.Ask: float
+        self.OpenInterest: float
+        self.OpenInterestChange: float
+
+        fill_obj(self, **kwargs)
+
+
+class OptionsGreeks(object):
+    def __init__(self, **kwargs):
+        self.Symbol: TradeSymbol = TradeSymbol()
+        self.Delta: float = 0.0
+        self.Theta: float = 0.0
+        self.Gamma: float = 0.0
+        self.Vega: float = 0.0
+        self.IV: float = 0.0
+        self.IVVWap: float = 0.0
+        self.Vanna: float = 0.0
+        self.Charm: float = 0.0
+        self.Speed: float = 0.0
+        self.Zomma: float = 0.0
+        self.Color: float = 0.0
+        self.Volga: float = 0.0
+        self.Veta: float = 0.0
+        self.ThetaGammaRatio: float = 0.0
+        self.ThetaVegaRatio: float = 0.0
+        self.DTR: float = 0.0
+
+        fill_obj(self, **kwargs)
 
 
 class PlaceOrderRequest(object):

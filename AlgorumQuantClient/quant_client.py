@@ -203,6 +203,20 @@ class QuantEngineClient:
         # print(holiday_list)
         return holiday_list
 
+    def get_options_chain(self, ticker):
+        request = AlgorumWebsocketMessage('get_options_chain',
+                                          AlgorumMessageType.Request,
+                                          self.CorIdCounter.increment(),
+                                          jsonpickle.encode(ticker, False), None)
+        # print(request)
+        response = self.execute_async(request)
+
+        if response.MessageType == AlgorumMessageType.ErrorResponse:
+            raise Exception(response.Error['ErrorMessage'])
+
+        options_chain = jsonpickle.decode(response.JsonData)
+        return options_chain
+
     def place_order(self, place_order_request: PlaceOrderRequest):
         request = AlgorumWebsocketMessage('place_order',
                                           AlgorumMessageType.Request,
